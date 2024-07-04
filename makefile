@@ -31,7 +31,7 @@ migrate: ## Enter the container and run migrate
 	docker exec php-upd8 php artisan migrate
 
 seed: ## Enter the container and run db:seed
-	docker exec -it php-upd8 db:seed
+	docker exec -it php-upd8 php artisan db:seed
 
 composer: ## Enter the container and composer install
 	docker exec -it php-upd8 composer install
