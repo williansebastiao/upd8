@@ -1,0 +1,45 @@
+services:
+    nginx:
+        image: upd8/nginx:latest
+        container_name: nginx-upd8
+        build: infrastructure/nginx
+        ports:
+            - 8000:80
+        volumes:
+            - .:/var/www
+        depends_on:
+            - php
+        networks:
+            - upd8
+    php:
+        image: upd8/php:8.3-fpm
+        container_name: php-upd8
+        build: infrastructure/php
+        ports:
+            - 9000:9000
+        volumes:
+            - .:/var/www
+        networks:
+            - upd8
+    db:
+        image: mysql:8.0
+        container_name: db-upd8
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: upd8
+            MYSQL_USER: upd8
+            MYSQL_PASSWORD: 123456
+            MYSQL_ROOT_PASSWORD: 123456
+        volumes:
+            - ./.database/mysql:/var/lib/mysql
+        depends_on:
+            - php
+        ports:
+            - "3306:3306"
+        expose:
+            - "33060"
+        networks:
+            - upd8
+networks:
+    upd8:
+        driver: bridge
