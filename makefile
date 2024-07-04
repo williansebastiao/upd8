@@ -5,7 +5,7 @@ SHELL := /bin/bash
 DOCKER_COMPOSE := docker-compose
 COMPOSER := composer
 
-.PHONY: help start build stop container migrate seed
+.PHONY: help start build stop container migrate seed composer key
 
 help:
 	@echo "Upd8 Makefile"
@@ -30,5 +30,11 @@ container: ## Enter the container
 migrate: ## Enter the container and run migrate
 	docker exec php-upd8 php artisan migrate
 
-seed: ## Enter the container and run shell_plus
+seed: ## Enter the container and run db:seed
 	docker exec -it php-upd8 db:seed
+
+composer: ## Enter the container and composer install
+	docker exec -it php-upd8 composer install
+
+key: ## Enter the container and run key generate
+	docker exec -it php-upd8 php artisan key:generate
