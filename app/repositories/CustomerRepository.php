@@ -3,42 +3,77 @@
 namespace App\repositories;
 
 use App\Models\Customer;
+use Illuminate\Support\Collection;
 
 class CustomerRepository
 {
 
+    /**
+     * @var Customer
+     */
     protected Customer $customer;
 
+    /**
+     * @param Customer $customer
+     */
     public function __construct(Customer $customer)
     {
         $this->customer = $customer;
     }
 
-    public function findAll()
+    /**
+     * @return Collection
+     */
+    public function findAll(): Collection
     {
         return $this->customer->get();
     }
 
-    public function save(array $data)
+    /**
+     * @param array $data
+     * @return Customer
+     */
+    public function save(array $data): Customer
     {
         return $this->customer->create($data);
     }
 
-    public function findById(int $id)
+    /**
+     * @param int $id
+     * @return Customer
+     */
+    public function findById(int $id): Customer
     {
         return $this->customer->findOrFail($id);
     }
 
-    public function update(int $id, array $data)
+    /**
+     * @param int $id
+     * @param array $data
+     * @return Customer
+     */
+    public function update(int $id, array $data): Customer
     {
-        $this->customer->find($id)->update($data);
-        return $this->customer->find($id);
+        $query = $this->customer->find($id);
+        $query->update($data);
+        return $query;
     }
 
-    public function destroy(int $id)
+    /**
+     * @param int $id
+     * @return bool
+     * @throws \Exception
+     */
+    public function destroy(int $id): bool
     {
-        return $this->customer->find($id)->delete();
-    }
+        try {
+            $query = $this->customer->findOrFail($id);
+            $query->delete();
+            return true;
+        } catch (\Exception $e) {
+            throw new \Exception('An error occurred while deleting the file');
+        }
 
+    }
 
 }

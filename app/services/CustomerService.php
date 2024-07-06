@@ -3,30 +3,43 @@
 namespace App\services;
 
 use App\Constants\Gender;
+use App\Models\Customer;
 use App\repositories\CustomerRepository;
+use Illuminate\Support\Collection;
 
 class CustomerService
 {
 
+    /**
+     * @var CustomerRepository
+     */
     protected CustomerRepository $customerRepository;
 
+    /**
+     * @param CustomerRepository $customerRepository
+     */
     public function __construct(CustomerRepository $customerRepository)
     {
         $this->customerRepository = $customerRepository;
     }
 
-    public function findUserByParamOrAll()
+    /**
+     * @return Collection
+     */
+    public function findUserByParamOrAll(): Collection
     {
         return $this->customerRepository->findAll();
     }
 
-    public function store(array $data)
+    /**
+     * @param array $data
+     * @return Customer
+     * @throws \Exception
+     */
+    public function store(array $data): Customer
     {
 
-        $gender = [Gender::MALE, Gender::FEMALE];
-        if (!in_array($data['gender'], $gender)) {
-            throw new \Exception('Gender is not valid');
-        }
+        $this->validateGender($data['gender']);
 
         $data['cpf'] = $this->formatCpf($data['cpf']);
         $data['birth'] = $this->formatBirth($data['birth']);
@@ -36,12 +49,16 @@ class CustomerService
         return $this->customerRepository->save($data);
     }
 
-    public function update(int $id, array $data)
+    /**
+     * @param int $id
+     * @param array $data
+     * @return Customer
+     * @throws \Exception
+     */
+    public function update(int $id, array $data): Customer
     {
-        $gender = [Gender::MALE, Gender::FEMALE];
-        if (!in_array($data['gender'], $gender)) {
-            throw new \Exception('Gender is not valid');
-        }
+
+        $this->validateGender($data['gender']);
 
         $data['cpf'] = $this->formatCpf($data['cpf']);
         $data['birth'] = $this->formatBirth($data['birth']);
@@ -51,15 +68,35 @@ class CustomerService
         return $this->customerRepository->update($id, $data);
     }
 
-    private function formatCpf(string $cpf)
+    /**
+     * @param string $cpf
+     * @return string
+     */
+    private function formatCpf(string $cpf): string
     {
         return preg_replace('/[^0-9]/', '', $cpf);
-
     }
 
-    private function formatBirth(string $birth)
+    /**
+     * @param string $birth
+     * @return string
+     */
+    private function formatBirth(string $birth): string
     {
         $value = \DateTime::createFromFormat('d/m/Y', $birth);
         return $value->format('Y-m-d');
+    }
+
+    /**
+     * @param string $gender
+     * @return void
+     * @throws \Exception
+     */
+    private function validateGender(string $gender): void
+    {
+        $genders = [Gender::MALE, Gender::FEMALE];
+        if (!in_array($gender, $genders)) {
+            throw new \Exception('Gender is not valid');
+        }
     }
 }

@@ -7,55 +7,91 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\api\CustomerRequest;
 use App\repositories\CustomerRepository;
 use App\services\CustomerService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
 
+    /**
+     * @var CustomerService
+     * @var CustomerRepository
+     */
     protected CustomerService $customerService;
     protected CustomerRepository $customerRepository;
 
+    /**
+     * @param CustomerService $customerService
+     * @param CustomerRepository $customerRepository
+     */
     public function __construct(CustomerService $customerService, CustomerRepository $customerRepository) {
         $this->customerService = $customerService;
         $this->customerRepository = $customerRepository;
     }
 
-    public function index(Request $request) {
-        try {
-            return $this->customerService->findUserByParamOrAll();
-        } catch (\Exception $e) {
-            return response()->json(['detail' => $e->getMessage()], StatusCode::INTERNAL_SERVER_ERROR);
-        }
-    }
 
-    public function store(CustomerRequest $request)
+    public function index(Request $request)
     {
         try {
-            return $this->customerService->store($request->validated());
+            $response = $this->customerService->findUserByParamOrAll();
+            return response()->json($response, StatusCode::SUCCESS);
         } catch (\Exception $e) {
             return response()->json(['detail' => $e->getMessage()], StatusCode::INTERNAL_SERVER_ERROR);
         }
     }
 
-    public function show($id) {
+    /**
+     * @param CustomerRequest $request
+     * @return JsonResponse
+     */
+    public function store(CustomerRequest $request): JsonResponse
+    {
         try {
-            return $this->customerRepository->findById($id);
+            $response = $this->customerService->store($request->validated());
+            return response()->json($response, StatusCode::CREATED);
         } catch (\Exception $e) {
             return response()->json(['detail' => $e->getMessage()], StatusCode::INTERNAL_SERVER_ERROR);
         }
     }
 
-    public function update(CustomerRequest $request, $id) {
+    /**
+     * @param $id
+     * @return JsonResponse
+     */
+    public function show($id): JsonResponse
+    {
         try {
-            return $this->customerService->update($id, $request->validated());
+            $response = $this->customerRepository->findById($id);
+            return response()->json($response, StatusCode::SUCCESS);
         } catch (\Exception $e) {
             return response()->json(['detail' => $e->getMessage()], StatusCode::INTERNAL_SERVER_ERROR);
         }
     }
 
-    public function destroy($id) {
+    /**
+     * @param CustomerRequest $request
+     * @param $id
+     * @return JsonResponse
+     */
+    public function update(CustomerRequest $request, $id): JsonResponse
+    {
         try {
-            return $this->customerRepository->destroy($id);
+            $response = $this->customerService->update($id, $request->validated());
+            return response()->json($response, StatusCode::SUCCESS);
+        } catch (\Exception $e) {
+            return response()->json(['detail' => $e->getMessage()], StatusCode::INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * @param $id
+     * @return JsonResponse
+     */
+    public function destroy($id): JsonResponse
+    {
+        try {
+            $this->customerRepository->destroy($id);
+            return response()->json(['detail' => 'Data deleted'], StatusCode::SUCCESS);
         } catch (\Exception $e) {
             return response()->json(['detail' => $e->getMessage()], StatusCode::INTERNAL_SERVER_ERROR);
         }
