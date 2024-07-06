@@ -33,29 +33,29 @@ class CustomerRepository
     public function findAll(array $data): LengthAwarePaginator
     {
 
-        $query = $this->customer;
+        $query = $this->customer->with(['state', 'city']);
         if(array_key_exists('cpf', $data)){
-            $query = $query->where('cpf', Str::formatCpf($data['cpf']));
+            $query = $query->orWhere('cpf', Str::formatCpf($data['cpf']));
         }
         if(array_key_exists('first_name', $data)){
-            $query = $query->where('first_name', $data['first_name']);
+            $query = $query->orWhere('first_name', $data['first_name']);
         }
         if(array_key_exists('birth', $data)){
-            $query = $query->where('birth', Str::formatBirth($data['birth']));
+            $query = $query->orWhere('birth', Str::formatBirth($data['birth']));
         }
         if(array_key_exists('gender', $data)){
-            $query = $query->where('gender', $data['gender']);
+            $query = $query->orWhere('gender', $data['gender']);
         }
         if(array_key_exists('state', $data)){
             $state = State::where('uf', strtoupper($data['state']))->first();
-            $query = $query->where('state_id', $state->id);
+            $query = $query->orWhere('state_id', $state->id);
         }
         if(array_key_exists('city', $data)){
             $city = City::where('name', $data['city'])->first();
-            $query = $query->where('city_id', $city->id);
+            $query = $query->orWhere('city_id', $city->id);
         }
 
-        return $query->paginate(10);
+        return $query->orderBy('id', 'desc')->paginate(10);
     }
 
     /**
