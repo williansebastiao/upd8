@@ -2,7 +2,11 @@
 
 namespace App\repositories;
 
+use App\Helpers\Str;
+use App\Models\City;
 use App\Models\Customer;
+use App\Models\State;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
 class CustomerRepository
@@ -21,12 +25,37 @@ class CustomerRepository
         $this->customer = $customer;
     }
 
+
     /**
-     * @return Collection
+     * @param array $data
+     * @return LengthAwarePaginator
      */
-    public function findAll(): Collection
+    public function findAll(array $data): LengthAwarePaginator
     {
-        return $this->customer->get();
+
+        $query = $this->customer;
+        if(array_key_exists('cpf', $data)){
+            $query = $query->where('cpf', Str::formatCpf($data['cpf']));
+        }
+        if(array_key_exists('first_name', $data)){
+            $query = $query->where('first_name', $data['first_name']);
+        }
+        if(array_key_exists('birth', $data)){
+            $query = $query->where('birth', Str::formatBirth($data['birth']));
+        }
+        if(array_key_exists('gender', $data)){
+            $query = $query->where('gender', $data['gender']);
+        }
+        if(array_key_exists('state', $data)){
+            $state = State::where('uf', strtoupper($data['state']))->first();
+            $query = $query->where('state_id', $state->id);
+        }
+        if(array_key_exists('city', $data)){
+            $city = City::where('name', $data['city'])->first();
+            $query = $query->where('city_id', $city->id);
+        }
+
+        return $query->paginate(10);
     }
 
     /**

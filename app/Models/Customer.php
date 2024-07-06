@@ -15,6 +15,7 @@ class Customer extends Model
         'city_id',
         'first_name',
         'last_name',
+        'cpf',
         'birth',
         'gender',
         'address',

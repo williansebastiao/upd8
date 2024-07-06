@@ -3,6 +3,7 @@
 namespace App\Http\Requests\api;
 
 use App\Constants\StatusCode;
+use App\Rules\UniqueCpf;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -25,9 +26,9 @@ class CustomerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'cpf' => 'required',
             'first_name' => 'required|min:4',
             'last_name' => 'required|min:4',
+            'cpf' => ['required', new UniqueCpf],
             'birth' => 'required|date_format:d/m/Y',
             'gender' => 'required',
             'address' => 'required',

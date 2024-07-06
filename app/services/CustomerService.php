@@ -5,7 +5,9 @@ namespace App\services;
 use App\Constants\Gender;
 use App\Models\Customer;
 use App\repositories\CustomerRepository;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use App\Helpers\Str;
 
 class CustomerService
 {
@@ -24,11 +26,12 @@ class CustomerService
     }
 
     /**
-     * @return Collection
+     * @param array $data
+     * @return LengthAwarePaginator
      */
-    public function findUserByParamOrAll(): Collection
+    public function findUserByParamOrAll(array $data): LengthAwarePaginator
     {
-        return $this->customerRepository->findAll();
+        return $this->customerRepository->findAll($data);
     }
 
     /**
@@ -60,31 +63,12 @@ class CustomerService
 
         $this->validateGender($data['gender']);
 
-        $data['cpf'] = $this->formatCpf($data['cpf']);
-        $data['birth'] = $this->formatBirth($data['birth']);
+        $data['cpf'] =  Str::formatCpf($data['cpf']);
+        $data['birth'] = Str::formatBirth($data['birth']);
         $data['state_id'] = $data['state'];
         $data['city_id'] = $data['city'];
 
         return $this->customerRepository->update($id, $data);
-    }
-
-    /**
-     * @param string $cpf
-     * @return string
-     */
-    private function formatCpf(string $cpf): string
-    {
-        return preg_replace('/[^0-9]/', '', $cpf);
-    }
-
-    /**
-     * @param string $birth
-     * @return string
-     */
-    private function formatBirth(string $birth): string
-    {
-        $value = \DateTime::createFromFormat('d/m/Y', $birth);
-        return $value->format('Y-m-d');
     }
 
     /**

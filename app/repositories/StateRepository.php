@@ -25,9 +25,18 @@ class StateRepository
         return $this->state->orderBy('name')->get();
     }
 
-    public function findIdByUf(string $uf)
+    /**
+     * @param string $uf
+     * @return Collection
+     */
+    public function findIdByUf(string $uf): Collection
     {
         return $this->state->where('uf', strtoupper($uf))->first();
+    }
+
+    public function findStateIdByUf(string $uf): int
+    {
+
     }
 
 }

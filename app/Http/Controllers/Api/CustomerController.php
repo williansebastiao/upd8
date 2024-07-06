@@ -33,7 +33,8 @@ class CustomerController extends Controller
     public function index(Request $request)
     {
         try {
-            $response = $this->customerService->findUserByParamOrAll();
+            $query = $request->query();
+            $response = $this->customerService->findUserByParamOrAll($query);
             return response()->json($response, StatusCode::SUCCESS);
         } catch (\Exception $e) {
             return response()->json(['detail' => $e->getMessage()], StatusCode::INTERNAL_SERVER_ERROR);
