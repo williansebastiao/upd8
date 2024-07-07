@@ -11,7 +11,7 @@ Este teste tem como objetivo realizar o cadastro de cliente e cidade utilizando 
 Para rodar esse projeto, você vai precisar renomar o arquivo .env.example para .env.
 
 ```
-cp .env.example .env
+mv .env.example .env
 ```
 
 
@@ -48,3 +48,7 @@ Caso não tenha nenhum gerenciador de banco de dados, pode acessar via PhpMyAdmi
 
 Para visualizar se o serviço está rodando, acesse a seguinte url:
 - http://localhost:8000/
+## Postman
+
+Dentro do projeto existe um arquivo chamado *Upd8.postman_collection.json* importe para o postman, dessa forma terá todos os endpoints disponíveis.
+
