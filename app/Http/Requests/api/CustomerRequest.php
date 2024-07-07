@@ -25,16 +25,31 @@ class CustomerRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'first_name' => 'required|min:4',
-            'last_name' => 'required|min:4',
-            'cpf' => ['required', new UniqueCpf],
-            'birth' => 'required|date_format:d/m/Y',
-            'gender' => 'required',
-            'address' => 'required',
-            'state' => 'required|integer',
-            'city' => 'required|integer',
-        ];
+        $segments = $this->segments();
+        if(in_array('update', $segments)) {
+            return [
+                'first_name' => 'required|min:4',
+                'cpf' => ['required'],
+                'last_name' => 'required|min:4',
+                'birth' => 'required|date_format:d/m/Y',
+                'gender' => 'required',
+                'address' => 'required',
+                'state' => 'required|integer',
+                'city' => 'required|integer',
+            ];
+        } else {
+            return [
+                'first_name' => 'required|min:4',
+                'last_name' => 'required|min:4',
+                'cpf' => ['required', new UniqueCpf],
+                'birth' => 'required|date_format:d/m/Y',
+                'gender' => 'required',
+                'address' => 'required',
+                'state' => 'required|integer',
+                'city' => 'required|integer',
+            ];
+        }
+
     }
 
     public function failedValidation(Validator $validator) {
