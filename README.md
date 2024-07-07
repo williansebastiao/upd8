@@ -11,7 +11,7 @@ Este teste tem como objetivo realizar o cadastro de cliente e cidade utilizando 
 Para rodar esse projeto, você vai precisar renomar o arquivo .env.example para .env.
 
 ```
-mv .env.example .env
+cp .env.example .env
 ```
 
 
