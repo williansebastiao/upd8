@@ -37,7 +37,23 @@ services:
         ports:
             - "3306:3306"
         expose:
-            - "33060"
+            - "3306"
+        networks:
+            - upd8
+    admin:
+        image: phpmyadmin:latest
+        container_name: admin-upd8
+        restart: unless-stopped
+        environment:
+            PMA_HOST: db
+            PMA_PORT: 3306
+            PMA_USER: upd8
+            PMA_PASSWORD: 123456
+            PMA_PMADB: upd8
+        depends_on:
+            - db
+        ports:
+            - "8001:80"
         networks:
             - upd8
 networks:

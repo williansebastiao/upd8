@@ -38,8 +38,13 @@ Para fazer a instalação execute os seguintes comandos:
 ```bash
   make seed
 ```
-    
+
+## PhpMyAdmin
+
+Caso não tenha nenhum gerenciador de banco de dados, pode acessar via PhpMyAdmin
+- http://localhost:8001/
+
 ## Health check
 
-Para visualizar se o serviço está rodando, acesse a seguinte url: 
+Para visualizar se o serviço está rodando, acesse a seguinte url:
 - http://localhost:8000/
