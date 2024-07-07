@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
              StateSeeder::class,
              CitySeeder::class,
              CustomerSeeder::class,
+             AgentSeeder::class,
          ]);
     }
 }

@@ -25,8 +25,16 @@ class State extends Model
         return $this->hasMany(City::class);
     }
 
+    /**
+     * @return HasOne
+     */
     public function customer(): HasOne
     {
         return $this->hasOne(Customer::class);
+    }
+
+    public function agent(): HasMany
+    {
+        return $this->hasMany(Customer::class);
     }
 }

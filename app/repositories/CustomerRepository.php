@@ -33,7 +33,7 @@ class CustomerRepository
     public function findAll(array $data): LengthAwarePaginator
     {
 
-        $query = $this->customer->with(['state', 'city']);
+        $query = $this->customer->with(['state', 'city.agent']);
         if(array_key_exists('cpf', $data)){
             $query = $query->orWhere('cpf', Str::formatCpf($data['cpf']));
         }
