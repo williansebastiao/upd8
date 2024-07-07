@@ -35,6 +35,6 @@ class City extends Model
 
     public function agent(): HasMany
     {
-        return $this->hasMany(Customer::class);
+        return $this->hasMany(Agent::class);
     }
 }
