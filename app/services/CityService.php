@@ -15,9 +15,11 @@ class CityService
     }
 
     /**
+     * @param array $data
+     * @return Collection
      * @throws \Exception
      */
-    public function findCitiesByStateUf(array $data)
+    public function findCitiesByStateUf(array $data): Collection
     {
         if(array_key_exists('state', $data)){
             return $this->cityRepository->findCitiesByStateUf($data['state']);

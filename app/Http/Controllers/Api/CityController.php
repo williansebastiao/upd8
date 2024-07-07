@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Constants\StatusCode;
 use App\Http\Controllers\Controller;
 use App\services\CityService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
@@ -19,9 +20,9 @@ class CityController extends Controller
 
     /**
      * @param Request $request
-     * @return Collection
+     * @return JsonResponse
      */
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         try {
             $queryString = $request->query();

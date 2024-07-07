@@ -27,16 +27,11 @@ class StateRepository
 
     /**
      * @param string $uf
-     * @return Collection
+     * @return State
      */
-    public function findIdByUf(string $uf): Collection
+    public function findIdByUf(string $uf): State
     {
         return $this->state->where('uf', strtoupper($uf))->first();
-    }
-
-    public function findStateIdByUf(string $uf): int
-    {
-
     }
 
 }

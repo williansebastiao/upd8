@@ -3,6 +3,7 @@
 namespace App\repositories;
 
 use App\Models\City;
+use App\Models\State;
 use Illuminate\Support\Collection;
 
 class CityRepository
@@ -17,9 +18,11 @@ class CityRepository
     }
 
     /**
+     * @param String $uf
+     * @return Collection
      * @throws \Exception
      */
-    public function findCitiesByStateUf(String $uf)
+    public function findCitiesByStateUf(String $uf): Collection
     {
         $state = $this->findStateIdByUf($uf);
         if (is_null($state)) {
@@ -28,7 +31,12 @@ class CityRepository
         return $this->city->where('state_id', $state->id)->orderBy('name')->get();
     }
 
-    private function findStateIdByUf(string $uf) {
+    /**
+     * @param string $uf
+     * @return State
+     */
+    private function findStateIdByUf(string $uf): State
+    {
         return $this->stateRepository->findIdByUf($uf);
     }
 
