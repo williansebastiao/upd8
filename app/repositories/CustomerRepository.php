@@ -83,7 +83,7 @@ class CustomerRepository
      */
     public function update(int $id, array $data): Customer
     {
-        $query = $this->customer->find($id);
+        $query = $this->customer->findOrFail($id);
         $query->update($data);
         return $query;
     }

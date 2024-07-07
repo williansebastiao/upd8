@@ -44,8 +44,8 @@ class CustomerService
 
         $this->validateGender($data['gender']);
 
-        $data['cpf'] = $this->formatCpf($data['cpf']);
-        $data['birth'] = $this->formatBirth($data['birth']);
+        $data['cpf'] = Str::formatCpf($data['cpf']);
+        $data['birth'] = Str::formatBirth($data['birth']);
         $data['state_id'] = $data['state'];
         $data['city_id'] = $data['city'];
 
@@ -63,7 +63,7 @@ class CustomerService
 
         $this->validateGender($data['gender']);
 
-        $data['cpf'] =  Str::formatCpf($data['cpf']);
+        $data['cpf'] = Str::formatCpf($data['cpf']);
         $data['birth'] = Str::formatBirth($data['birth']);
         $data['state_id'] = $data['state'];
         $data['city_id'] = $data['city'];
