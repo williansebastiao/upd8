@@ -19,22 +19,22 @@
 							"urlencoded": [
 								{
 									"key": "cpf",
-									"value": "228.748.864-24",
+									"value": "341.882.989-25",
 									"type": "text"
 								},
 								{
 									"key": "first_name",
-									"value": "Benedito",
+									"value": "Willians",
 									"type": "text"
 								},
 								{
 									"key": "last_name",
-									"value": "da Cruz",
+									"value": "Pereira",
 									"type": "text"
 								},
 								{
 									"key": "birth",
-									"value": "25/05/1960",
+									"value": "04/03/1987",
 									"type": "text"
 								},
 								{
@@ -94,7 +94,7 @@
 							"query": [
 								{
 									"key": "cpf",
-									"value": "228.748.864-24",
+									"value": "599.873.427-01",
 									"disabled": true
 								},
 								{
@@ -114,7 +114,7 @@
 								},
 								{
 									"key": "state",
-									"value": "SP",
+									"value": "MG",
 									"disabled": true
 								},
 								{
@@ -133,7 +133,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8000/api/customer/3/show",
+							"raw": "http://localhost:8000/api/customer/15/show",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -142,7 +142,7 @@
 							"path": [
 								"api",
 								"customer",
-								"3",
+								"15",
 								"show"
 							]
 						}
@@ -159,7 +159,7 @@
 							"urlencoded": [
 								{
 									"key": "cpf",
-									"value": "340.881.988-24",
+									"value": "341.882.989-25",
 									"type": "text"
 								},
 								{
@@ -200,7 +200,7 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:8000/api/customer/1/update",
+							"raw": "http://localhost:8000/api/customer/15/update",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -209,50 +209,8 @@
 							"path": [
 								"api",
 								"customer",
-								"1",
+								"15",
 								"update"
-							],
-							"query": [
-								{
-									"key": "cpf",
-									"value": "228.748.864-24",
-									"disabled": true
-								},
-								{
-									"key": "first_name",
-									"value": "Benedito",
-									"disabled": true
-								},
-								{
-									"key": "last_name",
-									"value": "da Cruz",
-									"disabled": true
-								},
-								{
-									"key": "birth",
-									"value": "25/05/1960",
-									"disabled": true
-								},
-								{
-									"key": "gender",
-									"value": "M",
-									"disabled": true
-								},
-								{
-									"key": "address",
-									"value": "Rua Nove",
-									"disabled": true
-								},
-								{
-									"key": "state",
-									"value": "4",
-									"disabled": true
-								},
-								{
-									"key": "city",
-									"value": "2",
-									"disabled": true
-								}
 							]
 						}
 					},
@@ -264,7 +222,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8000/api/customer/2/delete",
+							"raw": "http://localhost:8000/api/customer/15/delete",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -273,7 +231,7 @@
 							"path": [
 								"api",
 								"customer",
-								"2",
+								"15",
 								"delete"
 							]
 						}
@@ -320,13 +278,7 @@
 						"header": [],
 						"body": {
 							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "asdasd",
-									"value": "sdsadasd",
-									"type": "text"
-								}
-							]
+							"urlencoded": []
 						},
 						"url": {
 							"raw": "http://localhost:8000/api/city?state=sp",
